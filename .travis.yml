@@ -1,0 +1,16 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t cdomp/react-test -f ./client/Dockerfile.dev ./client
+
+  script:
+      -docker run cdomp/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t cdomp/multi-client ./client
+  - docker build -t cdomp/multi-nginx ./nginx
+  - docker build -t cdomp/multi-server ./server
+  - docker build -t cdomp/multi-worker ./worker
+  
