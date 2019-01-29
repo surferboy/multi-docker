@@ -13,3 +13,11 @@ after_success:
   - docker build -t cdomp/multi-nginx ./nginx
   - docker build -t cdomp/multi-server ./server
   - docker build -t cdomp/multi-worker ./worker
+
+  #Log in to docker CLI
+  - echo "$DOCKER_PASWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take those images and push to docker
+  - docker push cdomp/multi-client
+  - docker push cdomp/multi-nginx
+  - docker push cdomp/multi-server
+  - docker push cdomp/multi-worker
